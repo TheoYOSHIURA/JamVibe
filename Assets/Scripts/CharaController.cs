@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 
 public class CharaController : MonoBehaviour
 {
@@ -10,16 +11,10 @@ public class CharaController : MonoBehaviour
     [SerializeField] private float _range = 3f;
 
     RaycastHit[] _audioHitsFront = null;
-    RaycastHit[] _audioHitsLeft = null;
-    RaycastHit[] _audioHitsRight = null;
-
     RaycastHit _moveHitsFront;
-    RaycastHit _moveHitsLeft;
-    RaycastHit _moveHitsRight;
-
     bool _moveBoolFront;
-    bool _moveBoolLeft;
-    bool _moveBoolRight;
+
+    private List<RaycastHit> _playingHits = new List<RaycastHit>();
 
     void Start()
     {
@@ -28,43 +23,39 @@ public class CharaController : MonoBehaviour
 
     void Update()
     {
-        DeactivateAudioOnHearableNodes();
+        ActivateAudioOnHearableNodes();
+
         AudioHits();
         MoveHits();
-        ActivateAudioOnHearableNodes();
 
         Rotate();
         Move();
+
+        DeactivateAudioOnHearableNodes();
     }
 
     private void AudioHits()
     {
         _audioHitsFront = Physics.RaycastAll(transform.position, transform.forward, _range);
         Debug.DrawRay(transform.position, transform.forward * _range);
-
-        _audioHitsLeft = Physics.RaycastAll(transform.position, -transform.right, _range);
-        Debug.DrawRay(transform.position, -transform.right * _range);
-
-        _audioHitsRight = Physics.RaycastAll(transform.position, transform.right, _range);
-        Debug.DrawRay(transform.position, transform.right * _range);
     }
 
     private void MoveHits()
     {
         _moveBoolFront = Physics.Raycast(transform.position, transform.forward, out _moveHitsFront, 1);
         Debug.DrawRay(transform.position, transform.forward * _range, Color.green);
-
-        _moveBoolLeft = Physics.Raycast(transform.position, -transform.right, out _moveHitsLeft, 1);
-        Debug.DrawRay(transform.position, -transform.right * _range, Color.red);
-
-        _moveBoolRight = Physics.Raycast(transform.position, transform.right, out _moveHitsRight, 1);
-        Debug.DrawRay(transform.position, transform.right * _range, Color.blue);
     }
 
     private void Rotate()
     {
-        if (Input.GetKeyDown(_keyCodeLeft)) transform.Rotate(0, -90 , 0);
-        if (Input.GetKeyDown(_keyCodeRight)) transform.Rotate(0, 90, 0);
+        if (Input.GetKeyDown(_keyCodeLeft))
+        {
+            transform.Rotate(0, -90, 0);
+        }
+        if (Input.GetKeyDown(_keyCodeRight))
+        {
+            transform.Rotate(0, 90, 0);
+        }
     }
 
     private void Move()
@@ -82,53 +73,19 @@ public class CharaController : MonoBehaviour
     {
         if (_audioHitsFront != null)
         {
-            _audioHitsFront = _audioHitsFront.OrderBy((d) => (d.distance)).ToArray();
             foreach (RaycastHit hit in _audioHitsFront)
             {
-                if (hit.transform.CompareTag("Node"))
+                if (!_playingHits.Contains(hit))
                 {
-                    AudioSource audio = hit.transform.GetComponent<AudioSource>();
-                    audio.Play();
-                    //Debug
-                    Debug.Log("Playing Sound");
-                }
-                else
-                {
-                    break;
+                    _playingHits.Add(hit);
                 }
             }
-        }
-        
-        if (_audioHitsLeft != null)
-        {
-            _audioHitsFront = _audioHitsLeft.OrderBy((d) => (d.distance)).ToArray();
-            foreach (RaycastHit hit in _audioHitsLeft)
+            foreach (RaycastHit hit in _playingHits)
             {
-                if (hit.transform.CompareTag("Node"))
+                AudioSource audio = hit.transform.GetComponent<AudioSource>();
+                if ((audio != null) && (!audio.isPlaying))
                 {
-                    AudioSource audio = hit.transform.GetComponent<AudioSource>();
                     audio.Play();
-                }
-                else
-                {
-                    break;
-                }
-            }
-        }
-        
-        if (_audioHitsRight != null)
-        {
-            _audioHitsFront = _audioHitsRight.OrderBy((d) => (d.distance)).ToArray();
-            foreach (RaycastHit hit in _audioHitsRight)
-            {
-                if (hit.transform.CompareTag("Node"))
-                {
-                    AudioSource audio = hit.transform.GetComponent<AudioSource>();
-                    audio.Play();
-                }
-                else
-                {
-                    break;
                 }
             }
         }
@@ -136,33 +93,26 @@ public class CharaController : MonoBehaviour
 
     private void DeactivateAudioOnHearableNodes()
     {
-        if (_audioHitsFront != null)
+        if (_playingHits != null)
         {
-            foreach (RaycastHit hit in _audioHitsFront)
+            List<RaycastHit> toRemove = new List<RaycastHit>();
+            foreach (RaycastHit hit in _playingHits)
             {
-                AudioSource audio = hit.transform.GetComponent<AudioSource>();
-                audio.Stop();
+                if (!_audioHitsFront.Contains(hit))
+                {
+                    toRemove.Add(hit);
+                }
+            }
+
+            foreach (RaycastHit hit in toRemove)
+            {
+                if (_playingHits.Contains(hit))
+                {
+                    AudioSource audio = hit.transform.GetComponent<AudioSource>();
+                    if (audio != null) audio.Stop();
+                    _playingHits.Remove(hit);
+                }
             }
         }
-
-        if (_audioHitsLeft != null)
-        {
-            foreach (RaycastHit hit in _audioHitsLeft)
-            {
-                AudioSource audio = hit.transform.GetComponent<AudioSource>();
-                audio.Stop();
-            }
-        }
-
-        if (_audioHitsRight != null)
-        {
-            foreach (RaycastHit hit in _audioHitsRight)
-            {
-                AudioSource audio = hit.transform.GetComponent<AudioSource>();
-                audio.Stop();
-            }
-        }
-
     }
-
 }

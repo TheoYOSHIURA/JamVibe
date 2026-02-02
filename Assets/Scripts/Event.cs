@@ -4,6 +4,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "Event", menuName = "Scriptable Objects/Event")]
 public class Event : ScriptableObject
 {
+    [SerializeField] private Enum _eventType;
     [SerializeField] private string _eventName;
     [SerializeField] private AudioClip _choixA;
     [SerializeField] private AudioClip _choixB;
@@ -27,4 +28,13 @@ public class Event : ScriptableObject
     public ScriptableObject Reward1B => _reward1B;
     public ScriptableObject Reward2A => _reward2A;
     public ScriptableObject Reward2B => _reward2B; 
+
+    public enum Enum
+    {
+        Combat,
+        Trésor,
+        Fontaine,
+        Situation
+        
+    }
 }

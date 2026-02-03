@@ -114,6 +114,23 @@ public class CharaController : MonoBehaviour
         transform.position = _moveHitsBack.transform.position;
     }
 
+    public void EquipItem(Weapon weapon = null, Armor armor = null)
+    {
+        if (weapon != null)
+        {
+            if (_weapon != null) _strength -= weapon.Strength;
+            _weapon = weapon;
+            _strength = _strength * _strength;
+        }
+
+        if (armor != null)
+        {
+            if (_armor != null) _armorClass -= _armor.ArmorClass;
+            _armor = armor;
+            _armorClass += _armor.ArmorClass;
+        }
+    }
+
     private void ActivateAudioOnHearableNodes()
     {
         if (_audioHitsFront != null)

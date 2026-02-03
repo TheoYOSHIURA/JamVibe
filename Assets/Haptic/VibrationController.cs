@@ -55,7 +55,7 @@ public class VibrationController : MonoBehaviour
     #endregion Events
     private void Start()
     {
-        StartCoroutine(RumbleXTimes(6));
+        //StartCoroutine(RumbleXTimes(6));
     }
 
     void Update()
@@ -110,7 +110,12 @@ public class VibrationController : MonoBehaviour
         }
     }
 
-    public IEnumerator RumbleXTimes(int times)
+    public void RumbleXTime(int times)
+    {
+        StartCoroutine(Rumble(times));
+    }
+
+    public IEnumerator Rumble(int times)
     {
         if (Gamepad.current == null)
             yield break;

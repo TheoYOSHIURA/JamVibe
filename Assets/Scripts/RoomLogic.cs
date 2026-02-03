@@ -15,6 +15,8 @@ public class RoomLogic : MonoBehaviour
     void Start()
     {
         _currentAudioSource = GetComponent<AudioSource>();
+        //ne pas oublier de se subscribe aux touches
+        
     }
 
     // Update is called once per frame
@@ -31,14 +33,25 @@ public class RoomLogic : MonoBehaviour
         _currentAudioSource.PlayOneShot(_currentEvent.ChoixB);
         StartCoroutine(waitForSound(_currentAudioSource));
         _currentAudioSource.panStereo = 0f;
+        
         yield return null;
     }
 
     void OnInputLeftChoice()
     {
-        _leftInputChosen = true;
+         _leftInputChosen = true;
+        if (_currentEvent.eventType == Event.Enum.Fontaine)
+        {
+            StartCoroutine(OnsuccessChoice());
+        }
+         else if (_currentEvent.eventType == Event.Enum.Trésor)
+        {
+            StartCoroutine(OnsuccessChoice());
+        }
+        else
+        {
         _diceRoll = Random.Range(1, 7);
-        //rumbleXtime(_diceRoll);
+        VibrationController.Instance.RumbleXTime(_diceRoll);
         if (_diceRoll >= 4)
         {
             StartCoroutine(OnsuccessChoice());
@@ -46,6 +59,7 @@ public class RoomLogic : MonoBehaviour
         else
         {
             StartCoroutine(OnfailChoice());
+        }
         }
 
     }
@@ -53,8 +67,15 @@ public class RoomLogic : MonoBehaviour
     void OnInputRightChoice()
     {
         _rightInputChosen = true;
+        if (_currentEvent.eventType == Event.Enum.Fontaine)
+        {
+            CharaController.Instance.Gold -= 1;
+            StartCoroutine(OnsuccessChoice());
+        }
+        else
+        {
         _diceRoll = Random.Range(1, 7);
-        //rumbleXtime(_diceRoll);
+        VibrationController.Instance.RumbleXTime(_diceRoll);
         if (_diceRoll >= 4)
         {
             StartCoroutine(OnsuccessChoice());
@@ -62,6 +83,7 @@ public class RoomLogic : MonoBehaviour
         else
         {
             StartCoroutine(OnfailChoice());
+        }
         }
     }
 
@@ -71,14 +93,14 @@ public class RoomLogic : MonoBehaviour
         {
             _currentAudioSource.PlayOneShot(_currentEvent.Result1ChoixA);
             StartCoroutine(waitForSound(_currentAudioSource));
-            //_currentEvent.Reward1A
+            ApplyReward(_currentEvent.Reward1A);
 
         }
         else if (_rightInputChosen)
         {
             _currentAudioSource.PlayOneShot(_currentEvent.Result1ChoixB);
             StartCoroutine(waitForSound(_currentAudioSource));
-            //_currentEvent.Reward1B
+            ApplyReward(_currentEvent.Reward1B);
         }
         yield return null;
     }
@@ -89,13 +111,13 @@ public class RoomLogic : MonoBehaviour
         {
             _currentAudioSource.PlayOneShot(_currentEvent.Result2ChoixA);
             StartCoroutine(waitForSound(_currentAudioSource));
-            //_currentEvent.Reward2A
+            ApplyReward(_currentEvent.Reward2A);
         }
         else if (_rightInputChosen)
         {
             _currentAudioSource.PlayOneShot(_currentEvent.Result2ChoixB);
             StartCoroutine(waitForSound(_currentAudioSource));
-            //_currentEvent.Reward2B
+            ApplyReward(_currentEvent.Reward2B);
         }
         yield return null;
     }
@@ -121,5 +143,12 @@ public class RoomLogic : MonoBehaviour
     {
         _currentAudioSource.Stop();
 
+    }
+    void ApplyReward(Reward reward)
+    {
+        CharaController.Instance.Hp += reward.Heal;
+        CharaController.Instance.Hp -= reward.Damage;
+        CharaController.Instance.Gold += reward.Gold;
+        //ici faire logique armure et arme theo
     }
 }

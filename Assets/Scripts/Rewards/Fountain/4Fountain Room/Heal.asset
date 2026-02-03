@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heal
   m_EditorClassIdentifier: Assembly-CSharp::Reward
   _damage: 0
-  _heal: 0
+  _heal: 3
   _gold: 0
   _armor: {fileID: 0}
   _weapon: {fileID: 0}

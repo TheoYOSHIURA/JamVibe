@@ -146,8 +146,17 @@ public class CombatLogic : MonoBehaviour
         }
         else
         {
-            _fleeEventHappened = false;
-            _playerHasflee = true;
+            if (UnityEngine.Random.Range(1, 7) >= 3)
+            {
+                _playerHasflee = true;
+                Debug.Log("Fuite !");
+            }
+            else
+            {
+                Debug.Log("Fuite ratée");
+            }
+                _fleeEventHappened = false;
+            
         }
 
         VibrationController.Instance.OnConfirmLeft -= OnFlee;

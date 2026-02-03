@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b371ffe5c328c44088b25d14aec7e43, type: 3}
   m_Name: 1Crawler
   m_EditorClassIdentifier: Assembly-CSharp::Event
-  _eventType: 0
+  _eventType: 1
   _eventName: 
+  _description: {fileID: 0}
   _choixA: {fileID: 0}
   _choixB: {fileID: 0}
   _result1choixA: {fileID: 0}

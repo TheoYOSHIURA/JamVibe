@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b371ffe5c328c44088b25d14aec7e43, type: 3}
   m_Name: 1Treasure Room
   m_EditorClassIdentifier: Assembly-CSharp::Event
-  _eventType: 1
+  _eventType: 2
   _eventName: 
+  _description: {fileID: 0}
   _choixA: {fileID: 8300000, guid: 3e167461493921c4dafe53fcec737f42, type: 3}
   _choixB: {fileID: 8300000, guid: e95b7c419946c8048bf4b8c54cf9cfb4, type: 3}
   _result1choixA: {fileID: 8300000, guid: dee6d0c99e5bb6e45a5e02c2a2830f1b, type: 3}

@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class CharaController : MonoBehaviour
 {
+    #region Attributes
+    [Header("Instance")]
+    private static CharaController _instance;
+
     [Header("Key bindings")]
     [SerializeField] private KeyCode _keyCodeForward = KeyCode.Z;
     [SerializeField] private KeyCode _keyCodeLeft = KeyCode.Q;
@@ -13,11 +17,30 @@ public class CharaController : MonoBehaviour
     [Header("Hearing range")]
     [SerializeField] private float _range = 3f;
 
-    // 
+    [Header("Raycasting")]
     private RaycastHit[] _audioHitsFront = null;
     private RaycastHit _moveHitsFront;
     private bool _moveBoolFront;
     private List<RaycastHit> _playingHits = new List<RaycastHit>();
+
+    [Header("Character Stats")]
+    [SerializeField] private int _hp = 5;
+    [SerializeField] private int _armorClass = 5;
+    [SerializeField] private int _strength = 1;
+    [SerializeField] private int _gold = 0;
+    [SerializeField] private Weapon _weapon;
+    [SerializeField] private Armor _armor;
+    #endregion Attributes
+
+    #region Properties
+    public static CharaController Instance { get => _instance; set => _instance = value; }
+    public int Hp { get => _hp; set => _hp = value; }
+    public int ArmorClass { get => _armorClass; set => _armorClass = value; }
+    public int Strength { get => _strength; set => _strength = value; }
+    public int Gold { get => _gold; set => _gold = value; }
+    public Weapon Weapon { get => _weapon; set => _weapon = value; }
+    public Armor Armor { get => _armor; set => _armor = value; }
+    #endregion Properties
 
     void Start()
     {

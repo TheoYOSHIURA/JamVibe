@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b371ffe5c328c44088b25d14aec7e43, type: 3}
   m_Name: 4Fountain Room
   m_EditorClassIdentifier: Assembly-CSharp::Event
-  _eventType: 2
+  _eventType: 3
   _eventName: 
-  _choixA: {fileID: 0}
-  _choixB: {fileID: 0}
-  _result1choixA: {fileID: 0}
+  _description: {fileID: 8300000, guid: b356b317ac38c4346bb489818f686fa1, type: 3}
+  _choixA: {fileID: 8300000, guid: 34a2a26095894c64785b8ce098cd2fdb, type: 3}
+  _choixB: {fileID: 8300000, guid: d4b01efcbe470814382b46926fc978f1, type: 3}
+  _result1choixA: {fileID: 8300000, guid: 2ea71b0966690ca45b2d19bdc8a63032, type: 3}
   _result2choixA: {fileID: 0}
-  _result1choixB: {fileID: 0}
+  _result1choixB: {fileID: 8300000, guid: ecc019f5131ca0840ae84cb448899181, type: 3}
   _result2choixB: {fileID: 0}
   _reward1A: {fileID: 11400000, guid: 2f6ae19f74e7eb4499927c0832fb6b01, type: 2}
   _reward1B: {fileID: 11400000, guid: 72c9c16578fa323499544f1d72d7b469, type: 2}

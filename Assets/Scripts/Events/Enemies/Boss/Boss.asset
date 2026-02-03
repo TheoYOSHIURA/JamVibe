@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b371ffe5c328c44088b25d14aec7e43, type: 3}
   m_Name: Boss
   m_EditorClassIdentifier: Assembly-CSharp::Event
-  _eventType: 0
+  _eventType: 1
   _eventName: 
-  _choixA: {fileID: 0}
-  _choixB: {fileID: 0}
-  _result1choixA: {fileID: 0}
+  _description: {fileID: 8300000, guid: cb9b54d5d9f5ebe49aadbe8e2a9d8105, type: 3}
+  _choixA: {fileID: 8300000, guid: bf24c84504583394ea4075f652e8e4a2, type: 3}
+  _choixB: {fileID: 8300000, guid: 153891ecce73c0c4d952eb7ab25e1829, type: 3}
+  _result1choixA: {fileID: 8300000, guid: e8053c58d73a3f34a8d16bf6c1ae033c, type: 3}
   _result2choixA: {fileID: 0}
-  _result1choixB: {fileID: 0}
+  _result1choixB: {fileID: 8300000, guid: b8c3bd4e950fcee4081379969b3a3f93, type: 3}
   _result2choixB: {fileID: 0}
   _reward1A: {fileID: 0}
   _reward1B: {fileID: 0}

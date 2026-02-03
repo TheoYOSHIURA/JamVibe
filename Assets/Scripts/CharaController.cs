@@ -1,19 +1,22 @@
-using UnityEngine;
-using System.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class CharaController : MonoBehaviour
 {
+    [Header("Key bindings")]
     [SerializeField] private KeyCode _keyCodeForward = KeyCode.Z;
     [SerializeField] private KeyCode _keyCodeLeft = KeyCode.Q;
     [SerializeField] private KeyCode _keyCodeRight = KeyCode.D;
 
+    [Header("Hearing range")]
     [SerializeField] private float _range = 3f;
 
-    RaycastHit[] _audioHitsFront = null;
-    RaycastHit _moveHitsFront;
-    bool _moveBoolFront;
-
+    // 
+    private RaycastHit[] _audioHitsFront = null;
+    private RaycastHit _moveHitsFront;
+    private bool _moveBoolFront;
     private List<RaycastHit> _playingHits = new List<RaycastHit>();
 
     void Start()
@@ -73,10 +76,12 @@ public class CharaController : MonoBehaviour
     {
         if (_audioHitsFront != null)
         {
+            Array.Sort(_audioHitsFront, (a, b) => a.distance.CompareTo(b.distance));
             foreach (RaycastHit hit in _audioHitsFront)
             {
                 if (!_playingHits.Contains(hit))
                 {
+                    if (hit.transform.CompareTag("Wall")) break;
                     _playingHits.Add(hit);
                 }
             }

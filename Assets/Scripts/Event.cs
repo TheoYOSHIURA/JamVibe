@@ -14,7 +14,7 @@ public class Event : ScriptableObject
     [SerializeField] private AudioClip _result2choixB;
     [SerializeField] private ScriptableObject _reward1A;
     [SerializeField] private ScriptableObject _reward1B;
-     [SerializeField] private ScriptableObject _reward2A;
+    [SerializeField] private ScriptableObject _reward2A;
     [SerializeField] private ScriptableObject _reward2B;
     
     public string EventName => _eventName;
@@ -37,6 +37,5 @@ public class Event : ScriptableObject
         Fontaine,
         
         Situation
-        
     }
 }

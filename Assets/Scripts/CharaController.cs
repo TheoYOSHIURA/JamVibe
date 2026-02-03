@@ -17,7 +17,9 @@ public class CharaController : MonoBehaviour
     private float _stickLeft = Input.GetAxis("Horizontal");
     private float _stickRightForward = Input.GetAxis("Mouse Y");
     private float _stickRight = Input.GetAxis("Mouse X");
-
+    private bool _leftInput = false;
+    private bool _rightInput = false;
+    private bool _forwardInput = false;
     [Header("Hearing range")]
     [SerializeField] private float _range = 3f;
 
@@ -75,6 +77,31 @@ public class CharaController : MonoBehaviour
         _stickLeft = Input.GetAxis("Horizontal");
         _stickRightForward = Input.GetAxis("Mouse Y");
         _stickRight = Input.GetAxis("Mouse X");
+
+        if (Input.GetKeyDown(_keyCodeLeft) || _stickRight < -0.7f || _stickLeft < -0.7f)
+        {
+            _leftInput = true;
+        }
+        else
+        {
+            _leftInput = false;
+        }
+         if (Input.GetKeyDown(_keyCodeRight) || _stickRight > 0.7f || _stickLeft > 0.7f)
+        {
+            _rightInput = true;
+        }
+        else
+        {
+            _rightInput = false;
+        }
+        if (Input.GetKeyDown(_keyCodeForward) || _stickLeftForward > 0.7f || _stickRightForward > 0.7f)
+        {
+            _forwardInput = true;
+        }
+        else
+        {
+            _forwardInput = false;
+        }
         
     }
 
@@ -92,11 +119,11 @@ public class CharaController : MonoBehaviour
 
     private void Rotate()
     {
-        if (Input.GetKeyDown(_keyCodeLeft) || _stickRight < -0.7f || _stickLeft < -0.7f)
+        if (_leftInput)
         {
             transform.Rotate(0, -90, 0);
         }
-        if (Input.GetKeyDown(_keyCodeRight ) || _stickRight > 0.7f || _stickLeft > 0.7f)
+        if (_rightInput)
         {
             transform.Rotate(0, 90, 0);
         }
@@ -109,7 +136,7 @@ public class CharaController : MonoBehaviour
 
     private void Move()
     {
-        if (Input.GetKeyDown(_keyCodeForward) || _stickLeftForward > 0.7f || _stickRightForward > 0.7f)
+        if (_forwardInput)
         {
             if ((_moveBoolFront) && (_moveHitsFront.transform.CompareTag("Node")))
             {

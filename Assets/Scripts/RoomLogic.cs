@@ -18,17 +18,15 @@ public class RoomLogic : MonoBehaviour
     private bool _leftChoiceHappened = false;
     private bool _rightChoiceHappened = false;
 
+    private bool _eventFinished = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         _currentAudioSource = GetComponent<AudioSource>();
         _combatLogic = GetComponent<CombatLogic>();
-        //ne pas oublier de se subscribe aux touches
-
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -37,25 +35,26 @@ public class RoomLogic : MonoBehaviour
     {
         if (_currentEvent != null)
         {
+            Debug.Log("Entered a event room");
             _currentAudioSource.PlayOneShot(_currentEvent.Description);
-            StartCoroutine(WaitForSound(_currentAudioSource));
+            yield return StartCoroutine(WaitForSound(_currentAudioSource));
 
             _currentAudioSource.panStereo = -1f;
             _currentAudioSource.PlayOneShot(_currentEvent.ChoixA);
-            StartCoroutine(WaitForSound(_currentAudioSource));
+            yield return StartCoroutine(WaitForSound(_currentAudioSource));
 
             _currentAudioSource.panStereo = 1f;
             _currentAudioSource.PlayOneShot(_currentEvent.ChoixB);
-            StartCoroutine(WaitForSound(_currentAudioSource));
+            yield return StartCoroutine(WaitForSound(_currentAudioSource));
 
             _currentAudioSource.panStereo = 0f;
+
+            Debug.Log("Wainting for choice");
+            yield return StartCoroutine(WaitForChoice());
 
             switch (_currentEvent.EventType)
             {
                 case Event.EEventType.Base:
-
-                    yield return StartCoroutine(WaitForChoice());
-
                     if (_rightChoiceHappened)
                     {
                         if (RollDice(6))
@@ -81,8 +80,6 @@ public class RoomLogic : MonoBehaviour
                     break;
 
                 case Event.EEventType.Fontaine:
-                    yield return StartCoroutine(WaitForChoice());
-
                     if (_rightChoiceHappened)
                     {
                         if (CharaController.Instance.Gold > 0)
@@ -98,7 +95,6 @@ public class RoomLogic : MonoBehaviour
                     break;
 
                 case Event.EEventType.Trésor:
-
                     if (_rightChoiceHappened)
                     {
                         if (RollDice(6))
@@ -121,7 +117,9 @@ public class RoomLogic : MonoBehaviour
                     break;
             }
         }
-        
+
+        Debug.Log("Event finished");
+        _eventFinished = true;
         yield return null;
     }
 
@@ -183,7 +181,10 @@ public class RoomLogic : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        StartCoroutine(OnRoomEnter());
+        if (!_eventFinished && _currentEvent != null)
+        {
+            StartCoroutine(OnRoomEnter());
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -197,12 +198,26 @@ public class RoomLogic : MonoBehaviour
         CharaController.Instance.Hp -= reward.Damage;
         CharaController.Instance.Gold += reward.Gold;
         
-        if (CharaController.Instance.Weapon.Strength < reward.Weapon.Strength)
+        if (CharaController.Instance.Weapon != null)
+        {
+            if (CharaController.Instance.Weapon.Strength < reward.Weapon.Strength)
+            {
+                CharaController.Instance.EquipItem(reward.Weapon, null);
+            }
+        }
+        else
         {
             CharaController.Instance.EquipItem(reward.Weapon, null);
         }
 
-        if (CharaController.Instance.Armor.ArmorClass < reward.Armor.ArmorClass)
+        if (CharaController.Instance.Armor != null)
+        {
+            if (CharaController.Instance.Armor.ArmorClass < reward.Armor.ArmorClass)
+            {
+                CharaController.Instance.EquipItem(null, reward.Armor);
+            }
+        }
+        else
         {
             CharaController.Instance.EquipItem(null, reward.Armor);
         }

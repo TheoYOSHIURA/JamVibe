@@ -9,6 +9,7 @@ using UnityEngine;
 public class RoomLogic : MonoBehaviour
 {
     [SerializeField] private Event _currentEvent;
+    [SerializeField] private AudioClip _diceSound;
     private int _diceRoll;
     private bool _leftInputChosen = false;
     private bool _rightInputChosen = false;
@@ -101,7 +102,7 @@ public class RoomLogic : MonoBehaviour
 
                     if (_rightChoiceHappened)
                     {
-                        if (RollDice(6))
+                        if (RollDice(6, 3))
                         {
                             StartCoroutine(OnsuccessChoice(true));
                         }
@@ -221,7 +222,11 @@ public class RoomLogic : MonoBehaviour
 
     private bool RollDice(int maxValue, int successOn = 4)
     {
+        _currentAudioSource.PlayOneShot(_diceSound);
+        StartCoroutine(WaitForSound(_currentAudioSource));
         int random = UnityEngine.Random.Range(1, maxValue + 1);
         return random >= successOn;
+        
+        
     }
 }

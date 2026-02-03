@@ -13,6 +13,10 @@ public class CharaController : MonoBehaviour
     [SerializeField] private KeyCode _keyCodeForward = KeyCode.Z;
     [SerializeField] private KeyCode _keyCodeLeft = KeyCode.Q;
     [SerializeField] private KeyCode _keyCodeRight = KeyCode.D;
+    private float _stickLeftForward = Input.GetAxis("Vertical");
+    private float _stickLeft = Input.GetAxis("Horizontal");
+    private float _stickRightForward = Input.GetAxis("Mouse Y");
+    private float _stickRight = Input.GetAxis("Mouse X");
 
     [Header("Hearing range")]
     [SerializeField] private float _range = 3f;
@@ -56,6 +60,7 @@ public class CharaController : MonoBehaviour
 
     void Update()
     {
+        
         ActivateAudioOnHearableNodes();
 
         AudioHits();
@@ -65,6 +70,12 @@ public class CharaController : MonoBehaviour
         Move();
 
         DeactivateAudioOnHearableNodes();
+
+        _stickLeftForward = Input.GetAxis("Vertical");
+        _stickLeft = Input.GetAxis("Horizontal");
+        _stickRightForward = Input.GetAxis("Mouse Y");
+        _stickRight = Input.GetAxis("Mouse X");
+        
     }
 
     private void AudioHits()
@@ -81,11 +92,11 @@ public class CharaController : MonoBehaviour
 
     private void Rotate()
     {
-        if (Input.GetKeyDown(_keyCodeLeft))
+        if (Input.GetKeyDown(_keyCodeLeft) || _stickRight < -0.7f || _stickLeft < -0.7f)
         {
             transform.Rotate(0, -90, 0);
         }
-        if (Input.GetKeyDown(_keyCodeRight))
+        if (Input.GetKeyDown(_keyCodeRight ) || _stickRight > 0.7f || _stickLeft > 0.7f)
         {
             transform.Rotate(0, 90, 0);
         }
@@ -98,7 +109,7 @@ public class CharaController : MonoBehaviour
 
     private void Move()
     {
-        if (Input.GetKeyDown(_keyCodeForward))
+        if (Input.GetKeyDown(_keyCodeForward) || _stickLeftForward > 0.7f || _stickRightForward > 0.7f)
         {
             if ((_moveBoolFront) && (_moveHitsFront.transform.CompareTag("Node")))
             {

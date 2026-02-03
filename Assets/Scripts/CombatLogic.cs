@@ -6,9 +6,7 @@ using UnityEngine.Events;
 public class CombatLogic : MonoBehaviour
 {
     [Header("Enemy Stats")]
-    [SerializeField] private int _enemyHP = 10;
-    [SerializeField] private int _enemyArmorClass = 5;
-    [SerializeField] private int _enemyStrength = 1;
+    [SerializeField] private Monster _monster;
 
     [Header("Combat System")]
     private bool _playerHasflee = false;
@@ -21,7 +19,7 @@ public class CombatLogic : MonoBehaviour
     void Start()
     {
         //For testing purpose
-        StartCoroutine(CombatSystem());
+        //StartCoroutine(CombatSystem());
     }
 
     // Update is called once per frame
@@ -42,23 +40,22 @@ public class CombatLogic : MonoBehaviour
 
         Debug.Log("Player rolled a " + attackRoll + " on atk roll");
 
-        if (attackRoll >= _enemyArmorClass)
+        if (attackRoll >= _monster.ArmorClass)
         {
             int damageRoll = UnityEngine.Random.Range(1, 5);
-            _enemyHP -= damageRoll;
+            _monster.Hp -= damageRoll;
             Debug.Log("Player rolled a " + damageRoll + " on damage roll");
         }
         else
         {
             Debug.Log("Armor class is too high!");
         }
-        
     }
 
     private void EnemyAttack()
     {
         int attackRoll = UnityEngine.Random.Range(1, 7);
-        attackRoll += _enemyStrength;
+        attackRoll += _monster.Strength;
 
         Debug.Log("Enemy rolled a " + attackRoll + " on atk roll");
 
@@ -89,19 +86,19 @@ public class CombatLogic : MonoBehaviour
         Debug.Log("Description du monstre");
 
         // Boucle de combat
-        while (CharaController.Instance.Hp > 0 && _enemyHP > 0 && !_playerHasflee)
+        while (CharaController.Instance.Hp > 0 && _monster.Hp > 0 && !_playerHasflee)
         {
             // Choix attaque ou fuite
             Debug.Log("Waiting for choice");
             yield return StartCoroutine(WaitForEvent());
+            yield return new WaitForSeconds(1);
 
             if (_playerHasflee)
             {
                 PlayerFlee();
-                yield return new WaitForSeconds(1);
                 yield break;
             }
-            if (_enemyHP > 0)
+            if (_monster.Hp > 0)
             {
                 EnemyAttack();
                 yield return new WaitForSeconds(1);
@@ -113,7 +110,7 @@ public class CombatLogic : MonoBehaviour
             Debug.Log("Player died");
         }
 
-        if (_enemyHP < 0)
+        if (_monster.Hp < 0)
         {
             Debug.Log("Enemy died");
         }

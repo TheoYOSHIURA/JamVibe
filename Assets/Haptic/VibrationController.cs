@@ -12,6 +12,7 @@ public class VibrationController : MonoBehaviour
     [SerializeField] private float _deadZone = 0.2f;       // IMPORTANT : 0–1
     [SerializeField] private float _chargeSpeed = 0.5f;
     [SerializeField] private float _decaySpeed = 1f;
+    [SerializeField] private float _chargeAmount = 0.5f;
 
     [Header("Dice haptic vibration")]
     [SerializeField] private float _vibrationStrength = 0.8f;
@@ -104,13 +105,13 @@ public class VibrationController : MonoBehaviour
         
        Gamepad.current.SetMotorSpeeds(_chargeLeft, _chargeRight);
 
-        if (_chargeRight == 1)
+        if (_chargeRight >= _chargeAmount)
         {
             _chargeRight = 0f;
             _onConfirmRight?.Invoke();
         }
 
-        if (_chargeLeft == 1)
+        if (_chargeLeft >= _chargeAmount)
         {
             _chargeLeft = 0f;
             _onConfirmLeft?.Invoke();

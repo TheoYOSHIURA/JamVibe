@@ -40,11 +40,11 @@ public class RoomLogic : MonoBehaviour
     void OnInputLeftChoice()
     {
          _leftInputChosen = true;
-        if (_currentEvent.eventType == Event.Enum.Fontaine)
+        if (_currentEvent.EventType == Event.Enum.Fontaine)
         {
             StartCoroutine(OnsuccessChoice());
         }
-         else if (_currentEvent.eventType == Event.Enum.Trésor)
+         else if (_currentEvent.EventType == Event.Enum.Trésor)
         {
             StartCoroutine(OnsuccessChoice());
         }
@@ -67,7 +67,7 @@ public class RoomLogic : MonoBehaviour
     void OnInputRightChoice()
     {
         _rightInputChosen = true;
-        if (_currentEvent.eventType == Event.Enum.Fontaine)
+        if (_currentEvent.EventType == Event.Enum.Fontaine)
         {
             CharaController.Instance.Gold -= 1;
             StartCoroutine(OnsuccessChoice());

@@ -253,6 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomLogic
   _currentEvent: {fileID: 0}
+  _diceSound: {fileID: 8300000, guid: 84dcb97ba5f7fbd40826a0c61b0c75c1, type: 3}
 --- !u!114 &189856287786567509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,3 +267,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatLogic
   _monster: {fileID: 0}
+  _damagePlayer: {fileID: 0}
+  _deathPlayer: {fileID: 0}
+  _damageMonster: {fileID: 0}
+  _deathMonster: {fileID: 0}
+  _runAway: {fileID: 0}

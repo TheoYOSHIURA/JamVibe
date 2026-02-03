@@ -33,6 +33,11 @@ public class CombatLogic : MonoBehaviour
         
     }
 
+    public void StartCombat()
+    {
+        StartCoroutine(CombatSystem());
+    }
+
     private void PlayerAttack()
     {
         int attackRoll = UnityEngine.Random.Range(1, 7);

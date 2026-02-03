@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5818076827841944428}
   - component: {fileID: 8754833482457792192}
   - component: {fileID: 1293708355704482425}
+  - component: {fileID: 189856287786567509}
   m_Layer: 0
   m_Name: Node
   m_TagString: Node
@@ -224,3 +225,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomLogic
   _currentEvent: {fileID: 0}
+--- !u!114 &189856287786567509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440431376914110309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74263c2810f51e348ae02808ff478350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatLogic
+  _monster: {fileID: 0}

@@ -136,7 +136,6 @@ public class RoomLogic : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         StartCoroutine(OnRoomEnter());
-
     }
 
     void OnTriggerExit(Collider other)

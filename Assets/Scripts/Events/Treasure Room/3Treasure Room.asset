@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b371ffe5c328c44088b25d14aec7e43, type: 3}
   m_Name: 3Treasure Room
   m_EditorClassIdentifier: Assembly-CSharp::Event
-  _eventType: 1
+  _eventType: 2
   _eventName: 
+  _description: {fileID: 8300000, guid: d4f950de3b7ff8a4f87d84b04f41e15c, type: 3}
   _choixA: {fileID: 8300000, guid: 3e167461493921c4dafe53fcec737f42, type: 3}
   _choixB: {fileID: 8300000, guid: e95b7c419946c8048bf4b8c54cf9cfb4, type: 3}
   _result1choixA: {fileID: 8300000, guid: dee6d0c99e5bb6e45a5e02c2a2830f1b, type: 3}
-  _result2choixA: {fileID: 8300000, guid: fa2bb0897bc15154f99a4ccf7461ffeb, type: 3}
+  _result2choixA: {fileID: 8300000, guid: 82d7d22f8de7eb44abac0f38e18b0f32, type: 3}
   _result1choixB: {fileID: 0}
   _result2choixB: {fileID: 8300000, guid: ffea4fcfa7371ff429a3e195c7021a57, type: 3}
   _reward1A: {fileID: 11400000, guid: 40a0b63629e80a34c98ec78123309b6d, type: 2}

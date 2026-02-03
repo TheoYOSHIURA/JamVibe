@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b371ffe5c328c44088b25d14aec7e43, type: 3}
   m_Name: 6Crawler
   m_EditorClassIdentifier: Assembly-CSharp::Event
-  _eventType: 0
+  _eventType: 1
   _eventName: 
-  _choixA: {fileID: 0}
-  _choixB: {fileID: 0}
-  _result1choixA: {fileID: 0}
+  _description: {fileID: 8300000, guid: 83454f1c0d5226b4b833a190e672dc35, type: 3}
+  _choixA: {fileID: 8300000, guid: bf24c84504583394ea4075f652e8e4a2, type: 3}
+  _choixB: {fileID: 8300000, guid: 153891ecce73c0c4d952eb7ab25e1829, type: 3}
+  _result1choixA: {fileID: 8300000, guid: caa769112eb57ac4fb874297ec74d9fd, type: 3}
   _result2choixA: {fileID: 0}
-  _result1choixB: {fileID: 0}
+  _result1choixB: {fileID: 8300000, guid: 0050b84bae4e41b41b1866da8b129e4c, type: 3}
   _result2choixB: {fileID: 0}
   _reward1A: {fileID: 0}
   _reward1B: {fileID: 0}

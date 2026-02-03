@@ -1280,6 +1280,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8621566817592234796, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
   m_PrefabInstance: {fileID: 293797088}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &294731171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 294731173}
+  - component: {fileID: 294731172}
+  m_Layer: 0
+  m_Name: CombatTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &294731172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294731171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74263c2810f51e348ae02808ff478350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CombatLogic
+  _enemyHP: 10
+  _enemyArmorClass: 5
+  _enemyStrength: 1
+--- !u!4 &294731173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294731171}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.48211, y: 1, z: -6.40123}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &332019190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2588,6 +2635,12 @@ MonoBehaviour:
   _keyCodeLeft: 113
   _keyCodeRight: 100
   _range: 3
+  _hp: 5
+  _armorClass: 5
+  _strength: 1
+  _gold: 0
+  _weapon: {fileID: 0}
+  _armor: {fileID: 0}
 --- !u!136 &574653764
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -7828,3 +7881,4 @@ SceneRoots:
   - {fileID: 1178235826}
   - {fileID: 1001785216}
   - {fileID: 1395394113}
+  - {fileID: 294731173}

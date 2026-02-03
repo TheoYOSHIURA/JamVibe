@@ -53,14 +53,19 @@ public class VibrationController : MonoBehaviour
     }
 
     #endregion Events
+    private void Awake()
+    {
+        _instance = this;
+    }
+
     private void Start()
     {
-        //StartCoroutine(RumbleXTimes(6));
+        
     }
 
     void Update()
     {
-        
+        Confirm();
     }
 
     void OnDisable()
@@ -78,7 +83,7 @@ public class VibrationController : MonoBehaviour
 
         if (stickRightActive)
         {
-            _chargeRight += _chargeSpeed * Time.deltaTime;
+            if (_onConfirmRight != null || _onConfirmLeft != null) _chargeRight += _chargeSpeed * Time.deltaTime;
         }
         else
         {
@@ -87,7 +92,7 @@ public class VibrationController : MonoBehaviour
 
         if (stickLeftActive)
         {
-            _chargeLeft += _chargeSpeed * Time.deltaTime;
+            if (_onConfirmRight != null || _onConfirmLeft != null) _chargeLeft += _chargeSpeed * Time.deltaTime;
         }
         else
         {
@@ -97,15 +102,17 @@ public class VibrationController : MonoBehaviour
         _chargeRight = Mathf.Clamp01(_chargeRight);
         _chargeLeft = Mathf.Clamp01(_chargeLeft);
         
-        Gamepad.current.SetMotorSpeeds(_chargeLeft, _chargeRight);
+       Gamepad.current.SetMotorSpeeds(_chargeLeft, _chargeRight);
 
         if (_chargeRight == 1)
         {
+            _chargeRight = 0f;
             _onConfirmRight?.Invoke();
         }
 
         if (_chargeLeft == 1)
         {
+            _chargeLeft = 0f;
             _onConfirmLeft?.Invoke();
         }
     }

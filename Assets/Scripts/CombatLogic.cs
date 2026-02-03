@@ -95,7 +95,7 @@ public class CombatLogic : MonoBehaviour
         {
             // Choix attaque ou fuite
             Debug.Log("Waiting for choice");
-            yield return StartCoroutine(WaitForEvent());
+            yield return StartCoroutine(WaitForChoice());
             yield return new WaitForSeconds(1);
 
             if (_playerHasflee)
@@ -133,7 +133,7 @@ public class CombatLogic : MonoBehaviour
     }
 
     //Coroutine that waits until the flag is set
-    private IEnumerator WaitForEvent()
+    private IEnumerator WaitForChoice()
     {
         VibrationController.Instance.OnConfirmLeft += OnFlee;
         VibrationController.Instance.OnConfirmRight += OnAttack;

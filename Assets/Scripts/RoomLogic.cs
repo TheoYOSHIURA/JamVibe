@@ -42,11 +42,11 @@ public class RoomLogic : MonoBehaviour
             yield return StartCoroutine(WaitForSound(_currentAudioSource));
 
             _currentAudioSource.panStereo = -1f;
-            _currentAudioSource.PlayOneShot(_currentEvent.ChoixA);
+            _currentAudioSource.PlayOneShot(_currentEvent.ChoixA,1.8f);
             yield return StartCoroutine(WaitForSound(_currentAudioSource));
 
             _currentAudioSource.panStereo = 1f;
-            _currentAudioSource.PlayOneShot(_currentEvent.ChoixB);
+            _currentAudioSource.PlayOneShot(_currentEvent.ChoixB,1.8f);
             yield return StartCoroutine(WaitForSound(_currentAudioSource));
 
             _currentAudioSource.panStereo = 0f;

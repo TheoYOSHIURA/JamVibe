@@ -1,2 +1,2 @@
-Assets/Scenes/Donjon.unity
 Assets/Scenes/GameScene.unity
+Assets/Scenes/Donjon.unity

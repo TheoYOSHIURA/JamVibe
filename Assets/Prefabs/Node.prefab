@@ -272,3 +272,4 @@ MonoBehaviour:
   _damageMonster: {fileID: 0}
   _deathMonster: {fileID: 0}
   _runAway: {fileID: 0}
+  _diceSound: {fileID: 8300000, guid: 84dcb97ba5f7fbd40826a0c61b0c75c1, type: 3}

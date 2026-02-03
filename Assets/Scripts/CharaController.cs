@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharaController : MonoBehaviour
@@ -30,7 +31,6 @@ public class CharaController : MonoBehaviour
     private RaycastHit _moveHitsBack;
     private bool _moveBoolBack;
     private List<RaycastHit> _playingHits = new List<RaycastHit>();
-
     [Header("Character Stats")]
     [SerializeField] private int _hp = 5;
     [SerializeField] private int _armorClass = 0;
@@ -38,6 +38,11 @@ public class CharaController : MonoBehaviour
     [SerializeField] private int _gold = 0;
     [SerializeField] private Weapon _weapon;
     [SerializeField] private Armor _armor;
+
+    private bool _cantMove = false;
+    
+   
+
     #endregion Attributes
 
     #region Properties
@@ -48,6 +53,7 @@ public class CharaController : MonoBehaviour
     public int Gold { get => _gold; set => _gold = value; }
     public Weapon Weapon { get => _weapon; set => _weapon = value; }
     public Armor Armor { get => _armor; set => _armor = value; }
+    public bool CantMove { get => _cantMove; set => _cantMove = value; }
     #endregion Properties
 
     private void Awake()
@@ -64,14 +70,16 @@ public class CharaController : MonoBehaviour
     {
         
         ActivateAudioOnHearableNodes();
-
+        DeactivateAudioOnHearableNodes();
         AudioHits();
         MoveHits();
-
+        if (CantMove != true)
+        {
         Rotate();
         Move();
+        }
 
-        DeactivateAudioOnHearableNodes();
+        
 
         _stickLeftForward = Input.GetAxis("Vertical");
         _stickLeft = Input.GetAxis("Horizontal");

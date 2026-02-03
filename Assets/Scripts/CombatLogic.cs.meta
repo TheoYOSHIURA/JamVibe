@@ -1,2 +1,17 @@
 fileFormatVersion: 2
 guid: 74263c2810f51e348ae02808ff478350
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _monster: {instanceID: 0}
+  - _damagePlayer: {fileID: 8300000, guid: 99454593acc3af64c82cc55c6a723088, type: 3}
+  - _deathPlayer: {fileID: 8300000, guid: d7ed688c92a653d4c92de66bb727cd88, type: 3}
+  - _damageMonster: {fileID: 8300000, guid: 463249db91b7430449194579342ddfec, type: 3}
+  - _deathMonster: {fileID: 8300000, guid: 4c14a436b80ec52488e7dcaf390be234, type: 3}
+  - _runAway: {fileID: 8300000, guid: 4272da1e4ab7017469527bb055eda755, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

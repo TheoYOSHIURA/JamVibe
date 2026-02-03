@@ -36,6 +36,7 @@ public class RoomLogic : MonoBehaviour
     {
         if (_currentEvent != null)
         {
+            CharaController.Instance.CantMove = true;
             Debug.Log("Entered a event room");
             _currentAudioSource.PlayOneShot(_currentEvent.Description);
             yield return StartCoroutine(WaitForSound(_currentAudioSource));

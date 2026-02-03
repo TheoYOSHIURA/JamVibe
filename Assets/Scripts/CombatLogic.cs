@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class CombatLogic : MonoBehaviour
 {
+  
     [Header("Enemy Stats")]
     [SerializeField] private Monster _monster;
 
@@ -15,9 +16,16 @@ public class CombatLogic : MonoBehaviour
     private bool _attackEventHappened;
     private bool _fleeEventHappened;
 
+     private AudioSource _currentAudioSource;
+    [SerializeField] private AudioClip _damagePlayer;
+    [SerializeField] private AudioClip _deathPlayer;
+    [SerializeField] private AudioClip _damageMonster;
+    [SerializeField] private AudioClip _deathMonster;
+    [SerializeField] private AudioClip _runAway;
 
     void Start()
     {
+        _currentAudioSource = GetComponent<AudioSource>();
         //For testing purpose
         //StartCoroutine(CombatSystem());
     }
@@ -50,6 +58,7 @@ public class CombatLogic : MonoBehaviour
             int damageRoll = UnityEngine.Random.Range(1, 5);
             _monster.Hp -= damageRoll;
             Debug.Log("Player rolled a " + damageRoll + " on damage roll");
+            _currentAudioSource.PlayOneShot(_damageMonster);
         }
         else
         {
@@ -69,6 +78,7 @@ public class CombatLogic : MonoBehaviour
             int damageRoll = UnityEngine.Random.Range(1, 5);
             CharaController.Instance.Hp -= damageRoll;
             Debug.Log("Enemy rolled a " + damageRoll + " on damage roll");
+            _currentAudioSource.PlayOneShot(_damagePlayer);
         }
         else
         {
@@ -82,10 +92,13 @@ public class CombatLogic : MonoBehaviour
         CharaController.Instance.MoveBackwards();
         CharaController.Instance.ForceRotate();
         CharaController.Instance.ForceRotate();
+        _currentAudioSource.PlayOneShot(_runAway);
+        
     }
 
     private IEnumerator CombatSystem()
     {
+        CharaController.Instance.CantMove = true;
         // Description du monstre
         // --
         Debug.Log("Description du monstre");
@@ -107,16 +120,19 @@ public class CombatLogic : MonoBehaviour
             {
                 EnemyAttack();
                 yield return new WaitForSeconds(1);
+
             }
         }
 
         if (CharaController.Instance.Hp < 0)
         {
+            _currentAudioSource.PlayOneShot(_deathPlayer);
             Debug.Log("Player died");
         }
 
         if (_monster.Hp < 0)
         {
+            _currentAudioSource.PlayOneShot(_deathMonster);
             Debug.Log("Enemy died");
         }
     }
@@ -153,7 +169,7 @@ public class CombatLogic : MonoBehaviour
             }
             else
             {
-                Debug.Log("Fuite ratée");
+                Debug.Log("Fuite ratï¿½e");
             }
                 _fleeEventHappened = false;
             

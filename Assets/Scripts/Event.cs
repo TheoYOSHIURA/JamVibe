@@ -4,8 +4,9 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "Event", menuName = "Scriptable Objects/Event")]
 public class Event : ScriptableObject
 {
-    [SerializeField] private Enum _eventType;
+    [SerializeField] private EEventType _eventType;
     [SerializeField] private string _eventName;
+    [SerializeField] private AudioClip _description;
     [SerializeField] private AudioClip _choixA;
     [SerializeField] private AudioClip _choixB;
     [SerializeField] private AudioClip _result1choixA;
@@ -18,7 +19,6 @@ public class Event : ScriptableObject
     [SerializeField] private Reward _reward2B;
     
     public string EventName => _eventName;
-    public Enum EventType => _eventType;
     public AudioClip ChoixA => _choixA; 
     public AudioClip ChoixB => _choixB;
     public AudioClip Result1ChoixA => _result1choixA;   
@@ -28,10 +28,14 @@ public class Event : ScriptableObject
     public Reward Reward1A => _reward1A;
     public Reward Reward1B => _reward1B;
     public Reward Reward2A => _reward2A;
-    public Reward Reward2B => _reward2B; 
+    public Reward Reward2B => _reward2B;
 
-    public enum Enum
+    public EEventType EventType { get => _eventType; set => _eventType = value; }
+    public AudioClip Description { get => _description; set => _description = value; }
+
+    public enum EEventType
     {
+        Base,
         Combat,
         Trésor,
         Fontaine

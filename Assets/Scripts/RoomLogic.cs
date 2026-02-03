@@ -1,6 +1,8 @@
 
-using UnityEngine;
+using System;
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEngine;
 
 
 
@@ -11,12 +13,19 @@ public class RoomLogic : MonoBehaviour
     private bool _leftInputChosen = false;
     private bool _rightInputChosen = false;
     private AudioSource _currentAudioSource;
+    private CombatLogic _combatLogic = null;
+
+    private bool _leftChoiceHappened = false;
+    private bool _rightChoiceHappened = false;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _currentAudioSource = GetComponent<AudioSource>();
+        _combatLogic = GetComponent<CombatLogic>();
         //ne pas oublier de se subscribe aux touches
-        
+
     }
 
     // Update is called once per frame
@@ -26,111 +35,150 @@ public class RoomLogic : MonoBehaviour
     }
     IEnumerator OnRoomEnter()
     {
-        _currentAudioSource.panStereo = -1f;
-        _currentAudioSource.PlayOneShot(_currentEvent.ChoixA);
-        StartCoroutine(waitForSound(_currentAudioSource));
-        _currentAudioSource.panStereo = 1f;
-        _currentAudioSource.PlayOneShot(_currentEvent.ChoixB);
-        StartCoroutine(waitForSound(_currentAudioSource));
-        _currentAudioSource.panStereo = 0f;
+        if (_currentEvent != null)
+        {
+            _currentAudioSource.PlayOneShot(_currentEvent.Description);
+            StartCoroutine(WaitForSound(_currentAudioSource));
+
+            _currentAudioSource.panStereo = -1f;
+            _currentAudioSource.PlayOneShot(_currentEvent.ChoixA);
+            StartCoroutine(WaitForSound(_currentAudioSource));
+
+            _currentAudioSource.panStereo = 1f;
+            _currentAudioSource.PlayOneShot(_currentEvent.ChoixB);
+            StartCoroutine(WaitForSound(_currentAudioSource));
+
+            _currentAudioSource.panStereo = 0f;
+
+            switch (_currentEvent.EventType)
+            {
+                case Event.EEventType.Base:
+
+                    yield return StartCoroutine(WaitForChoice());
+
+                    if (_rightChoiceHappened)
+                    {
+                        if (RollDice(6))
+                        {
+                            StartCoroutine(OnsuccessChoice(true));
+                        }
+                        else
+                        {
+                            StartCoroutine(OnfailChoice(true));
+                        }
+                    }
+                    else
+                    {
+                        if (RollDice(6))
+                        {
+                            StartCoroutine(OnsuccessChoice(false));
+                        }
+                        else
+                        {
+                            StartCoroutine(OnfailChoice(false));
+                        }
+                    }
+                    break;
+
+                case Event.EEventType.Fontaine:
+                    yield return StartCoroutine(WaitForChoice());
+
+                    if (_rightChoiceHappened)
+                    {
+                        if (CharaController.Instance.Gold > 0)
+                        {
+                            CharaController.Instance.Gold--;
+                            StartCoroutine(OnsuccessChoice(true)); // ON DEVRAIT PAS PROPOSER LE CHOIX SI LE JOUEUR A PAS ASSEZ D'ARGENT
+                        }
+                    }
+                    else
+                    {
+                        StartCoroutine(OnsuccessChoice(false));
+                    }
+                    break;
+
+                case Event.EEventType.Trésor:
+
+                    if (_rightChoiceHappened)
+                    {
+                        if (RollDice(6))
+                        {
+                            StartCoroutine(OnsuccessChoice(true));
+                        }
+                        else
+                        {
+                            StartCoroutine(OnsuccessChoice(false));
+                        }
+                    }
+                    else
+                    {
+                        StartCoroutine(OnsuccessChoice(false));
+                    }
+                    break;
+
+                case Event.EEventType.Combat:
+                    _combatLogic.StartCombat();
+                    break;
+            }
+        }
         
         yield return null;
     }
 
-    void OnInputLeftChoice()
+    private void OnLeftChoice()
     {
-         _leftInputChosen = true;
-        if (_currentEvent.EventType == Event.Enum.Fontaine)
-        {
-            StartCoroutine(OnsuccessChoice());
-        }
-         else if (_currentEvent.EventType == Event.Enum.Trésor)
-        {
-            StartCoroutine(OnsuccessChoice());
-        }
-        else
-        {
-        _diceRoll = Random.Range(1, 7);
-        VibrationController.Instance.RumbleXTime(_diceRoll);
-        if (_diceRoll >= 4)
-        {
-            StartCoroutine(OnsuccessChoice());
-        }
-        else
-        {
-            StartCoroutine(OnfailChoice());
-        }
-        }
-
+        _leftChoiceHappened = true;
     }
 
-    void OnInputRightChoice()
+    private void OnRightChoice()
     {
-        _rightInputChosen = true;
-        if (_currentEvent.EventType == Event.Enum.Fontaine)
-        {
-            CharaController.Instance.Gold -= 1;
-            StartCoroutine(OnsuccessChoice());
-        }
-        else
-        {
-        _diceRoll = Random.Range(1, 7);
-        VibrationController.Instance.RumbleXTime(_diceRoll);
-        if (_diceRoll >= 4)
-        {
-            StartCoroutine(OnsuccessChoice());
-        }
-        else
-        {
-            StartCoroutine(OnfailChoice());
-        }
-        }
+        _rightChoiceHappened = true;
     }
 
-    IEnumerator OnsuccessChoice()
+    IEnumerator OnsuccessChoice(bool right)
     {
-        if (_leftInputChosen)
+        Debug.Log("Success");
+        if (!right)
         {
             _currentAudioSource.PlayOneShot(_currentEvent.Result1ChoixA);
-            StartCoroutine(waitForSound(_currentAudioSource));
+            StartCoroutine(WaitForSound(_currentAudioSource));
             ApplyReward(_currentEvent.Reward1A);
 
         }
-        else if (_rightInputChosen)
+        else
         {
             _currentAudioSource.PlayOneShot(_currentEvent.Result1ChoixB);
-            StartCoroutine(waitForSound(_currentAudioSource));
+            StartCoroutine(WaitForSound(_currentAudioSource));
             ApplyReward(_currentEvent.Reward1B);
         }
         yield return null;
     }
 
-    IEnumerator OnfailChoice()
+    IEnumerator OnfailChoice(bool right)
     {
-        if (_leftInputChosen)
+        Debug.Log("Fail");
+        if (!right)
         {
             _currentAudioSource.PlayOneShot(_currentEvent.Result2ChoixA);
-            StartCoroutine(waitForSound(_currentAudioSource));
+            StartCoroutine(WaitForSound(_currentAudioSource));
             ApplyReward(_currentEvent.Reward2A);
         }
-        else if (_rightInputChosen)
+        else
         {
             _currentAudioSource.PlayOneShot(_currentEvent.Result2ChoixB);
-            StartCoroutine(waitForSound(_currentAudioSource));
+            StartCoroutine(WaitForSound(_currentAudioSource));
             ApplyReward(_currentEvent.Reward2B);
         }
         yield return null;
     }
-    IEnumerator waitForSound(AudioSource other)
+
+    IEnumerator WaitForSound(AudioSource other)
     {
         //Wait Until Sound has finished playing
         while (_currentAudioSource.isPlaying)
         {
             yield return null;
         }
-
-        //Auidio has finished playing, disable GameObject
-        other.gameObject.SetActive(false);
     }
 
     void OnTriggerEnter(Collider other)
@@ -141,13 +189,39 @@ public class RoomLogic : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         _currentAudioSource.Stop();
-
     }
+
     void ApplyReward(Reward reward)
     {
         CharaController.Instance.Hp += reward.Heal;
         CharaController.Instance.Hp -= reward.Damage;
         CharaController.Instance.Gold += reward.Gold;
-        //ici faire logique armure et arme theo
+        
+        if (CharaController.Instance.Weapon.Strength < reward.Weapon.Strength)
+        {
+            CharaController.Instance.EquipItem(reward.Weapon, null);
+        }
+
+        if (CharaController.Instance.Armor.ArmorClass < reward.Armor.ArmorClass)
+        {
+            CharaController.Instance.EquipItem(null, reward.Armor);
+        }
+    }
+
+    private IEnumerator WaitForChoice()
+    {
+        VibrationController.Instance.OnConfirmLeft += OnLeftChoice;
+        VibrationController.Instance.OnConfirmRight += OnRightChoice;
+
+        yield return new WaitUntil(() => _leftChoiceHappened || _rightChoiceHappened);
+
+        VibrationController.Instance.OnConfirmLeft -= OnLeftChoice;
+        VibrationController.Instance.OnConfirmRight -= OnRightChoice;
+    }
+
+    private bool RollDice(int maxValue, int successOn = 4)
+    {
+        int random = UnityEngine.Random.Range(1, maxValue + 1);
+        return random >= successOn;
     }
 }

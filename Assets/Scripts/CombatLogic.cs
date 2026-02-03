@@ -22,6 +22,7 @@ public class CombatLogic : MonoBehaviour
     [SerializeField] private AudioClip _damageMonster;
     [SerializeField] private AudioClip _deathMonster;
     [SerializeField] private AudioClip _runAway;
+    [SerializeField] private AudioClip _diceSound;
 
     void Start()
     {
@@ -55,7 +56,9 @@ public class CombatLogic : MonoBehaviour
 
         if (attackRoll >= _monster.ArmorClass)
         {
+            _currentAudioSource.PlayOneShot(_diceSound);
             int damageRoll = UnityEngine.Random.Range(1, 5);
+            VibrationController.Instance.RumbleXTime(damageRoll);
             _monster.Hp -= damageRoll;
             Debug.Log("Player rolled a " + damageRoll + " on damage roll");
             _currentAudioSource.PlayOneShot(_damageMonster);
@@ -75,7 +78,9 @@ public class CombatLogic : MonoBehaviour
 
         if (attackRoll >= CharaController.Instance.ArmorClass)
         {
+            _currentAudioSource.PlayOneShot(_diceSound);
             int damageRoll = UnityEngine.Random.Range(1, 5);
+            VibrationController.Instance.RumbleXTime(damageRoll);
             CharaController.Instance.Hp -= damageRoll;
             Debug.Log("Enemy rolled a " + damageRoll + " on damage roll");
             _currentAudioSource.PlayOneShot(_damagePlayer);
@@ -120,7 +125,6 @@ public class CombatLogic : MonoBehaviour
             {
                 EnemyAttack();
                 yield return new WaitForSeconds(1);
-
             }
         }
 
@@ -135,6 +139,8 @@ public class CombatLogic : MonoBehaviour
             _currentAudioSource.PlayOneShot(_deathMonster);
             Debug.Log("Enemy died");
         }
+
+        CharaController.Instance.CantMove = false;
     }
 
     //Event subscriber that sets the flag
@@ -162,8 +168,11 @@ public class CombatLogic : MonoBehaviour
         }
         else
         {
-            if (UnityEngine.Random.Range(1, 7) >= 3)
+            int randomVal = UnityEngine.Random.Range(1, 7);
+            if (randomVal >= 3)
             {
+                _currentAudioSource.PlayOneShot(_diceSound);
+                VibrationController.Instance.RumbleXTime(randomVal);
                 _playerHasflee = true;
                 Debug.Log("Fuite !");
             }

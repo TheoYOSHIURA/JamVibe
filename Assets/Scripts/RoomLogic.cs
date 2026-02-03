@@ -93,6 +93,7 @@ public class RoomLogic : MonoBehaviour
                     else
                     {
                         StartCoroutine(OnsuccessChoice(false));
+                        CharaController.Instance.MoveBackwards();
                     }
                     break;
 
@@ -110,6 +111,7 @@ public class RoomLogic : MonoBehaviour
                     }
                     else
                     {
+                        CharaController.Instance.MoveBackwards();
                         StartCoroutine(OnsuccessChoice(false));
                     }
                     break;
@@ -122,6 +124,7 @@ public class RoomLogic : MonoBehaviour
 
         Debug.Log("Event finished");
         _eventFinished = true;
+        CharaController.Instance.CantMove = false;
         yield return null;
     }
 
@@ -241,8 +244,6 @@ public class RoomLogic : MonoBehaviour
         _currentAudioSource.PlayOneShot(_diceSound);
         StartCoroutine(WaitForSound(_currentAudioSource));
         int random = UnityEngine.Random.Range(1, maxValue + 1);
-        return random >= successOn;
-        
-        
-    }
+        VibrationController.Instance.RumbleXTime(random);
+        return random >= successOn;    }
 }

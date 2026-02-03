@@ -79,7 +79,6 @@ public class CharaController : MonoBehaviour
         MoveHits();
         if (CantMove != true)
         {
-
             _stickLeftForward = Input.GetAxis("Vertical");
             _stickLeft = Input.GetAxis("Horizontal");
             _stickRightForward = Input.GetAxis("Mouse Y");
@@ -125,10 +124,7 @@ public class CharaController : MonoBehaviour
             }
         }
 
-
-
         DeactivateAudioOnHearableNodes();
-
     }
 
     private void AudioHits()
@@ -204,7 +200,10 @@ public class CharaController : MonoBehaviour
             {
                 if (!_playingHits.Contains(hit))
                 {
-                    if (hit.transform.CompareTag("Wall")) break;
+                    if (hit.transform.CompareTag("Wall"))
+                    {
+                        break;
+                    }
                     _playingHits.Add(hit);
                 }
             }

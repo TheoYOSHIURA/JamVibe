@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -53,10 +54,14 @@ public class VibrationController : MonoBehaviour
     }
 
     #endregion Events
+    private void Start()
+    {
+        StartCoroutine(RumbleXTimes(6));
+    }
 
     void Update()
     {
-        Confirm();
+        //Confirm();
     }
 
     void OnDisable()
@@ -93,8 +98,7 @@ public class VibrationController : MonoBehaviour
         _chargeRight = Mathf.Clamp01(_chargeRight);
         _chargeLeft = Mathf.Clamp01(_chargeLeft);
         
-        float finalCharge = Mathf.Max(_chargeLeft, _chargeRight);
-        Gamepad.current.SetMotorSpeeds(finalCharge, finalCharge);
+        Gamepad.current.SetMotorSpeeds(_chargeLeft, _chargeRight);
 
         if (_chargeRight == 1)
         {
@@ -107,49 +111,18 @@ public class VibrationController : MonoBehaviour
         }
     }
 
-    public void RumbleXTimes(int times)
+    public IEnumerator RumbleXTimes(int times)
     {
-        if (_state == EState.Idle)
+        if (Gamepad.current == null)
+            yield break;
+
+        for (int i = 0; i < times; i++)
         {
-            _remainingVibrations = times;
-            _state = EState.Vibrating;
-            _timer = _vibrationDuration;
+            Gamepad.current.SetMotorSpeeds(_vibrationStrength, 0);
+            yield return new WaitForSeconds(_vibrationDuration);
+
+            Gamepad.current.SetMotorSpeeds(0f, 0f);
+            yield return new WaitForSeconds(_pauseBetweenVibrations);
         }
-
-        float diceVibration = 0f;
-
-        switch (_state)
-        {
-            case EState.Vibrating:
-                diceVibration = _vibrationStrength;
-
-                _timer -= Time.deltaTime;
-                if (_timer <= 0f)
-                {
-                    _remainingVibrations--;
-
-                    if (_remainingVibrations > 0)
-                    {
-                        _state = EState.Pausing;
-                        _timer = _pauseBetweenVibrations;
-                    }
-                    else
-                    {
-                        _state = EState.Idle;
-                    }
-                }
-                break;
-
-            case EState.Pausing:
-                _timer -= Time.deltaTime;
-                if (_timer <= 0f)
-                {
-                    _state = EState.Vibrating;
-                    _timer = _vibrationDuration;
-                }
-                break;
-        }
-
-        Gamepad.current.SetMotorSpeeds(diceVibration, diceVibration);
     }
 }

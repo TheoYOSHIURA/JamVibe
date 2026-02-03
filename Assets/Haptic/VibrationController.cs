@@ -1,17 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using XInputDotNetPure;
 
 public class VibrationController : MonoBehaviour
 {
-    PlayerIndex playerIndex;
-    GamePadState state;
-    GamePadState prevState;
-
-    [SerializeField] private float _deadZone = 0.2f;
+    [Header("Joystick vibration")]
+    [SerializeField] private float _deadZone = 0.2f;       // IMPORTANT : 0–1
     [SerializeField] private float _chargeSpeed = 0.5f;
     [SerializeField] private float _decaySpeed = 1f;
 
+    [Header("Dice haptic vibration")]
     [SerializeField] private float _vibrationStrength = 0.8f;
     [SerializeField] private float _vibrationDuration = 0.15f;
     [SerializeField] private float _pauseBetweenVibrations = 0.15f;
@@ -24,49 +21,50 @@ public class VibrationController : MonoBehaviour
 
     float _charge = 0f;
 
-    // Update is called once per frame
     void Update()
     {
-        // Joystick
         if (Gamepad.current == null) return;
 
+        /* =========================
+         * JOYSTICK (ANALOGIQUE)
+         * ========================= */
         Vector2 stick = Gamepad.current.leftStick.ReadValue();
         bool stickActive = stick.magnitude > _deadZone;
 
         if (stickActive)
-        {
             _charge += _chargeSpeed * Time.deltaTime;
-        }
         else
-        {
             _charge -= _decaySpeed * Time.deltaTime;
-        }
 
         _charge = Mathf.Clamp01(_charge);
+        float joystickVibration = _charge;
 
-        Gamepad.current.SetMotorSpeeds(_charge, _charge);
-
-        // Lancer le dé
+        /* =========================
+         * LANCER LE DÉ HAPTIQUE
+         * ========================= */
         if (_state == EState.Idle &&
             Gamepad.current.buttonSouth.wasPressedThisFrame)
         {
             _remainingVibrations = Random.Range(1, 7);
-            Debug.Log("🎲 Dé : " + _remainingVibrations);
-
             _state = EState.Vibrating;
             _timer = _vibrationDuration;
+
+            Debug.Log("🎲 Dé haptique : " + _remainingVibrations);
         }
+
+        /* =========================
+         * DÉ HAPTIQUE (STATE MACHINE)
+         * ========================= */
+        float diceVibration = 0f;
 
         switch (_state)
         {
             case EState.Vibrating:
-                // 🔥 VIBRATION CHAQUE FRAME
-                Gamepad.current.SetMotorSpeeds(_vibrationStrength, _vibrationStrength);
+                diceVibration = _vibrationStrength;
 
                 _timer -= Time.deltaTime;
                 if (_timer <= 0f)
                 {
-                    Gamepad.current.SetMotorSpeeds(0f, 0f);
                     _remainingVibrations--;
 
                     if (_remainingVibrations > 0)
@@ -82,8 +80,6 @@ public class VibrationController : MonoBehaviour
                 break;
 
             case EState.Pausing:
-                Gamepad.current.SetMotorSpeeds(0f, 0f);
-
                 _timer -= Time.deltaTime;
                 if (_timer <= 0f)
                 {
@@ -91,12 +87,15 @@ public class VibrationController : MonoBehaviour
                     _timer = _vibrationDuration;
                 }
                 break;
-
-            case EState.Idle:
-                Gamepad.current.SetMotorSpeeds(0f, 0f);
-                break;
         }
+
+        /* =========================
+         * MIX FINAL DES VIBRATIONS
+         * ========================= */
+        float finalVibration = Mathf.Max(joystickVibration, diceVibration);
+        Gamepad.current.SetMotorSpeeds(finalVibration, finalVibration);
     }
+
     void OnDisable()
     {
         if (Gamepad.current != null)

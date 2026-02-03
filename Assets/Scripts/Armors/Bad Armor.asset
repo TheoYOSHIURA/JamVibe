@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Bad Armor
   m_EditorClassIdentifier: Assembly-CSharp::Armor
-  _armorClass: 1
+  _armorClass: 2

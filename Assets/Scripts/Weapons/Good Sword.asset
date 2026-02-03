@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Good Sword
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  _strength: 0
+  _strength: 9

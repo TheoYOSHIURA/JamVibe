@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42abe5aefdd0c2a4a907276aa90a61dd, type: 3}
-  m_Name: Heal
-  m_EditorClassIdentifier: Assembly-CSharp::Reward
-  _damage: 0
-  _heal: 3
-  _gold: 0
-  _armor: {fileID: 0}
-  _weapon: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: ff5d08a74bcb57b40b99be6fd5f8b319, type: 3}
+  m_Name: 4Crawler
+  m_EditorClassIdentifier: Assembly-CSharp::Monster
+  _hp: 10
+  _armorClass: 3
+  _strength: 3

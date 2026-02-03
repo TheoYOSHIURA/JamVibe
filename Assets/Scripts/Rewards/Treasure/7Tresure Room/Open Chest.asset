@@ -15,5 +15,5 @@ MonoBehaviour:
   _damage: 0
   _heal: 0
   _gold: 0
-  _armor: 0
-  _weopn: 0
+  _armor: {fileID: 11400000, guid: 1739464f2d3d3a64f96c1cb9a29b69cf, type: 2}
+  _weapon: {fileID: 11400000, guid: c5ffec41a218cc1488e188085e926320, type: 2}

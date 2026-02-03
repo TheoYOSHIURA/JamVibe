@@ -13,13 +13,17 @@ public class CharaController : MonoBehaviour
     [SerializeField] private KeyCode _keyCodeForward = KeyCode.Z;
     [SerializeField] private KeyCode _keyCodeLeft = KeyCode.Q;
     [SerializeField] private KeyCode _keyCodeRight = KeyCode.D;
-    private float _stickLeftForward = Input.GetAxis("Vertical");
-    private float _stickLeft = Input.GetAxis("Horizontal");
-    private float _stickRightForward = Input.GetAxis("Mouse Y");
-    private float _stickRight = Input.GetAxis("Mouse X");
+    private float _stickLeftForward;
+    private float _stickLeft;
+    private float _stickRightForward;
+    private float _stickRight;
     private bool _leftInput = false;
     private bool _rightInput = false;
     private bool _forwardInput = false;
+    private bool _forwardWasPushed = false;
+    private bool _rightWasPushed = false;
+    private bool _leftWasPushed = false;
+
     [Header("Hearing range")]
     [SerializeField] private float _range = 3f;
 
@@ -38,6 +42,7 @@ public class CharaController : MonoBehaviour
     [SerializeField] private int _gold = 0;
     [SerializeField] private Weapon _weapon;
     [SerializeField] private Armor _armor;
+
     #endregion Attributes
 
     #region Properties
@@ -68,9 +73,6 @@ public class CharaController : MonoBehaviour
         AudioHits();
         MoveHits();
 
-        Rotate();
-        Move();
-
         DeactivateAudioOnHearableNodes();
 
         _stickLeftForward = Input.GetAxis("Vertical");
@@ -80,29 +82,42 @@ public class CharaController : MonoBehaviour
 
         if (Input.GetKeyDown(_keyCodeLeft) || _stickRight < -0.7f || _stickLeft < -0.7f)
         {
-            _leftInput = true;
+            if (!_leftInput)
+            {
+                _leftInput = true;
+                Rotate(false);
+            }
         }
         else
         {
             _leftInput = false;
         }
+
          if (Input.GetKeyDown(_keyCodeRight) || _stickRight > 0.7f || _stickLeft > 0.7f)
         {
-            _rightInput = true;
+            if (!_rightInput)
+            {
+                _rightInput = true;
+                Rotate(true);
+            }
         }
         else
         {
             _rightInput = false;
         }
+
         if (Input.GetKeyDown(_keyCodeForward) || _stickLeftForward > 0.7f || _stickRightForward > 0.7f)
         {
-            _forwardInput = true;
+            if (!_forwardInput)
+            {
+                _forwardInput = true;
+                Move();
+            }
         }
         else
         {
             _forwardInput = false;
         }
-        
     }
 
     private void AudioHits()
@@ -117,13 +132,13 @@ public class CharaController : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward * _range, Color.green);
     }
 
-    private void Rotate()
+    private void Rotate(bool right)
     {
-        if (_leftInput)
+        if (!right)
         {
             transform.Rotate(0, -90, 0);
         }
-        if (_rightInput)
+        if (right)
         {
             transform.Rotate(0, 90, 0);
         }
@@ -136,7 +151,7 @@ public class CharaController : MonoBehaviour
 
     private void Move()
     {
-        if (_forwardInput)
+        if (_forwardInput && _forwardInput)
         {
             if ((_moveBoolFront) && (_moveHitsFront.transform.CompareTag("Node")))
             {

@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class VibrationController : MonoBehaviour
 {
+    [Header("Instance")]
+    [SerializeField] private static VibrationController _instance;
+
     [Header("Joystick vibration")]
     [SerializeField] private float _deadZone = 0.2f;       // IMPORTANT : 0–1
     [SerializeField] private float _chargeSpeed = 0.5f;
@@ -15,14 +18,10 @@ public class VibrationController : MonoBehaviour
     [SerializeField] private float _vibrationDuration = 0.15f;
     [SerializeField] private float _pauseBetweenVibrations = 0.15f;
 
-    enum EState { Idle, Vibrating, Pausing }
-    EState _state = EState.Idle;
-
-    int _remainingVibrations;
-    float _timer;
-
     float _chargeRight = 0f;
     float _chargeLeft = 0f;
+
+    public static VibrationController Instance { get { return _instance; } }
 
     #region Events
     private event Action _onConfirmRight;
@@ -61,7 +60,7 @@ public class VibrationController : MonoBehaviour
 
     void Update()
     {
-        //Confirm();
+        
     }
 
     void OnDisable()

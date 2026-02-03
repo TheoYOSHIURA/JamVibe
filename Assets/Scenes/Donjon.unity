@@ -204,7 +204,7 @@ GameObject:
   - component: {fileID: 574653764}
   - component: {fileID: 574653763}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Chara
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,8 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28b8e6c71e89474428a269685bc94440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _keyCodeForward: 122
-  _keyCodeLeft: 113
+  _keyCodeForward: 119
+  _keyCodeLeft: 97
   _keyCodeRight: 100
   _range: 3
 --- !u!136 &574653764

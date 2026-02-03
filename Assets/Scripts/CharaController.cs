@@ -21,12 +21,14 @@ public class CharaController : MonoBehaviour
     private RaycastHit[] _audioHitsFront = null;
     private RaycastHit _moveHitsFront;
     private bool _moveBoolFront;
+    private RaycastHit _moveHitsBack;
+    private bool _moveBoolBack;
     private List<RaycastHit> _playingHits = new List<RaycastHit>();
 
     [Header("Character Stats")]
     [SerializeField] private int _hp = 5;
-    [SerializeField] private int _armorClass = 5;
-    [SerializeField] private int _strength = 1;
+    [SerializeField] private int _armorClass = 0;
+    [SerializeField] private int _strength = 0;
     [SerializeField] private int _gold = 0;
     [SerializeField] private Weapon _weapon;
     [SerializeField] private Armor _armor;
@@ -41,6 +43,11 @@ public class CharaController : MonoBehaviour
     public Weapon Weapon { get => _weapon; set => _weapon = value; }
     public Armor Armor { get => _armor; set => _armor = value; }
     #endregion Properties
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     void Start()
     {
@@ -84,6 +91,11 @@ public class CharaController : MonoBehaviour
         }
     }
 
+    public void ForceRotate()
+    {
+        transform.Rotate(0, -90, 0);
+    }
+
     private void Move()
     {
         if (Input.GetKeyDown(_keyCodeForward))
@@ -93,6 +105,13 @@ public class CharaController : MonoBehaviour
                 transform.position = _moveHitsFront.transform.position;
             }
         }
+    }
+
+    public void MoveBackwards()
+    {
+        _moveBoolBack = Physics.Raycast(transform.position, transform.forward, out _moveHitsBack, 1);
+        Debug.DrawRay(transform.position, -transform.forward * _range, Color.green);
+        transform.position = _moveHitsBack.transform.position;
     }
 
     private void ActivateAudioOnHearableNodes()

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6438323111637730550}
   - component: {fileID: 5818076827841944428}
   - component: {fileID: 8754833482457792192}
+  - component: {fileID: 1293708355704482425}
   m_Layer: 0
   m_Name: Node
   m_TagString: Node
@@ -210,3 +211,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1293708355704482425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7440431376914110309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d31fc1f1fc6565499e6980036e2ebde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoomLogic
+  _currentEvent: {fileID: 0}

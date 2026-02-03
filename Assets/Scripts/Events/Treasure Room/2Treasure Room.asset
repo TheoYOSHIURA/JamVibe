@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b371ffe5c328c44088b25d14aec7e43, type: 3}
+  m_Name: 2Treasure Room
+  m_EditorClassIdentifier: Assembly-CSharp::Event
+  _eventType: 1
+  _eventName: 
+  _choixA: {fileID: 0}
+  _choixB: {fileID: 0}
+  _result1choixA: {fileID: 0}
+  _result2choixA: {fileID: 0}
+  _result1choixB: {fileID: 0}
+  _result2choixB: {fileID: 0}
+  _reward1A: {fileID: 11400000, guid: bd79494e11f993f45bce63e86eda5d67, type: 2}
+  _reward1B: {fileID: 11400000, guid: 07583fefc5dfd3f4da53f352c9c14da1, type: 2}
+  _reward2A: {fileID: 0}
+  _reward2B: {fileID: 11400000, guid: d7664dafa2b0f54419d9c071a8d7a5c4, type: 2}

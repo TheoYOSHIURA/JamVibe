@@ -31,9 +31,11 @@ public class Event : ScriptableObject
 
     public enum Enum
     {
+        NonEvent,
         Combat,
         Trésor,
         Fontaine,
+        
         Situation
         
     }

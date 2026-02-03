@@ -18,7 +18,7 @@ public class Event : ScriptableObject
     [SerializeField] private Reward _reward2B;
     
     public string EventName => _eventName;
-    public Enum eventType => _eventType;
+    public Enum EventType => _eventType;
     public AudioClip ChoixA => _choixA; 
     public AudioClip ChoixB => _choixB;
     public AudioClip Result1ChoixA => _result1choixA;   

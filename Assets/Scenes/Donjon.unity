@@ -577,6 +577,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: f233a0332b4f4a74f8abaabaa3f25adc, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -833,6 +837,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: f233a0332b4f4a74f8abaabaa3f25adc, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -903,6 +911,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: 80cc095987ec9234791c0f87122fd24d, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -1168,6 +1180,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: 17ee153e2da7e114c937174143cc0fef, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -1325,9 +1341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74263c2810f51e348ae02808ff478350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatLogic
-  _enemyHP: 10
-  _enemyArmorClass: 5
-  _enemyStrength: 1
+  _monster: {fileID: 0}
 --- !u!4 &294731173
 Transform:
   m_ObjectHideFlags: 0
@@ -1731,6 +1745,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: 52c7c009e78fa2941aeaa1357224507f, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -2561,6 +2579,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: c8e5049a31215004d9f21a82ece401be, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -2958,6 +2980,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c68e9e668393094ebcedbef739971c9, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -3028,6 +3054,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: dc69129ee9cc06e40b898a45e92ce7bb, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -3164,6 +3194,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: f233a0332b4f4a74f8abaabaa3f25adc, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -3300,6 +3334,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f500c8ff28fc644d81af531c58ced32, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -4103,6 +4141,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: f233a0332b4f4a74f8abaabaa3f25adc, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -4305,6 +4347,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: f233a0332b4f4a74f8abaabaa3f25adc, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -5634,6 +5680,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: 978f82b66e85bcf4a964fe989863022b, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -5704,6 +5754,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: f233a0332b4f4a74f8abaabaa3f25adc, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -5840,6 +5894,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: f233a0332b4f4a74f8abaabaa3f25adc, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 
@@ -6690,6 +6748,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1395394113}
     m_Modifications:
+    - target: {fileID: 189856287786567509, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
+      propertyPath: _monster
+      value: 
+      objectReference: {fileID: 11400000, guid: 465d02542fffa5d4994824ee44611c23, type: 2}
     - target: {fileID: 1293708355704482425, guid: 99705498ece5a674eabe4337f1a85395, type: 3}
       propertyPath: _currentEvent
       value: 

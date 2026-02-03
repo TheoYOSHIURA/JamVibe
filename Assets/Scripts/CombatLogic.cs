@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CombatLogic : MonoBehaviour
 {
@@ -8,12 +10,18 @@ public class CombatLogic : MonoBehaviour
     [SerializeField] private int _enemyArmorClass = 5;
     [SerializeField] private int _enemyStrength = 1;
 
-    private bool playerTurn = false;
+    [Header("Combat System")]
+    private bool _playerHasflee = false;
+
+    [Header("Listen System")]
+    private bool _attackEventHappened;
+    private bool _fleeEventHappened;
 
 
     void Start()
     {
-        
+        //For testing purpose
+        StartCoroutine(CombatSystem());
     }
 
     // Update is called once per frame
@@ -22,27 +30,125 @@ public class CombatLogic : MonoBehaviour
         
     }
 
+    private void OnDestroy()
+    {
+        
+    }
+
     private void PlayerAttack()
     {
-        int attackRoll = Random.Range(1, 7);
+        int attackRoll = UnityEngine.Random.Range(1, 7);
         attackRoll += CharaController.Instance.Strength;
+
+        Debug.Log("Player rolled a " + attackRoll + " on atk roll");
 
         if (attackRoll >= _enemyArmorClass)
         {
-            int damageRoll = Random.Range(1, 5);
+            int damageRoll = UnityEngine.Random.Range(1, 5);
             _enemyHP -= damageRoll;
+            Debug.Log("Player rolled a " + damageRoll + " on damage roll");
         }
+        else
+        {
+            Debug.Log("Armor class is too high!");
+        }
+        
     }
 
     private void EnemyAttack()
     {
-        int attackRoll = Random.Range(1, 7);
+        int attackRoll = UnityEngine.Random.Range(1, 7);
         attackRoll += _enemyStrength;
+
+        Debug.Log("Enemy rolled a " + attackRoll + " on atk roll");
 
         if (attackRoll >= CharaController.Instance.ArmorClass)
         {
-            int damageRoll = Random.Range(1, 5);
+            int damageRoll = UnityEngine.Random.Range(1, 5);
             CharaController.Instance.Hp -= damageRoll;
+            Debug.Log("Enemy rolled a " + damageRoll + " on damage roll");
         }
+        else
+        {
+            Debug.Log("Armor class is too high!");
+        }
+    }
+
+    private void PlayerFlee()
+    {
+        Debug.Log("Le joueur s'est enfui");
+        CharaController.Instance.MoveBackwards();
+        CharaController.Instance.ForceRotate();
+        CharaController.Instance.ForceRotate();
+    }
+
+    private IEnumerator CombatSystem()
+    {
+        // Description du monstre
+        // --
+        Debug.Log("Description du monstre");
+
+        // Boucle de combat
+        while (CharaController.Instance.Hp > 0 && _enemyHP > 0 && !_playerHasflee)
+        {
+            // Choix attaque ou fuite
+            Debug.Log("Waiting for choice");
+            yield return StartCoroutine(WaitForEvent());
+
+            if (_playerHasflee)
+            {
+                PlayerFlee();
+                yield return new WaitForSeconds(1);
+                yield break;
+            }
+            if (_enemyHP > 0)
+            {
+                EnemyAttack();
+                yield return new WaitForSeconds(1);
+            }
+        }
+
+        if (CharaController.Instance.Hp < 0)
+        {
+            Debug.Log("Player died");
+        }
+
+        if (_enemyHP < 0)
+        {
+            Debug.Log("Enemy died");
+        }
+    }
+
+    //Event subscriber that sets the flag
+    private void OnAttack()
+    {
+        _attackEventHappened = true;
+    }
+
+    private void OnFlee()
+    {
+        _fleeEventHappened = true;
+    }
+
+    //Coroutine that waits until the flag is set
+    private IEnumerator WaitForEvent()
+    {
+        VibrationController.Instance.OnConfirmLeft += OnFlee;
+        VibrationController.Instance.OnConfirmRight += OnAttack;
+        yield return new WaitUntil(() => _attackEventHappened || _fleeEventHappened);
+
+        if (_attackEventHappened)
+        {
+            _attackEventHappened = false;
+            PlayerAttack();
+        }
+        else
+        {
+            _fleeEventHappened = false;
+            _playerHasflee = true;
+        }
+
+        VibrationController.Instance.OnConfirmLeft -= OnFlee;
+        VibrationController.Instance.OnConfirmRight -= OnAttack;
     }
 }
